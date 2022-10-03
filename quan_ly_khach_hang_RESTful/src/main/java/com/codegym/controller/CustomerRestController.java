@@ -53,15 +53,16 @@ public class CustomerRestController {
             return new ResponseEntity<>(customerService.save(customer), HttpStatus.OK);
         }
     }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<Customer> deleteCustomer(@PathVariable("id") Long id) {
+    @PutMapping("{id}")
+    public ResponseEntity<Customer> updateCustomer222(@PathVariable("id") Long id, @RequestBody Customer customer) {
         Optional<Customer> foundCustomer = customerService.findById(id);
         if (!foundCustomer.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            customerService.remove(id);
-            return new ResponseEntity<>(foundCustomer.get(), HttpStatus.NO_CONTENT);
+            customer.setId(id);
+            return new ResponseEntity<>(customerService.save(customer), HttpStatus.OK);
         }
     }
+
+
 }
